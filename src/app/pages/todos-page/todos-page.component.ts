@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { ITile, TodoItemComponent } from '../../components/todo-item/todo-item.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -36,7 +38,9 @@ const todos: ITodo[] = [
   imports: [
     MatTableModule,
     TodoItemComponent,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonModule,
+    MatIconModule
   ],
 })
 export class TodosPageComponent implements OnInit {

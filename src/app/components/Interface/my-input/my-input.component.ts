@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-my-input',
@@ -7,6 +7,13 @@ import { Component, Input } from '@angular/core';
   templateUrl: './my-input.component.html',
   styleUrl: './my-input.component.scss'
 })
-export class MyInputComponent {
+export class MyInputComponent implements OnInit {
   @Input() placeholder: string = '' 
+  
+  ngOnInit(): void {
+    const myInput = document.querySelector('.my-input')  
+    console.log(myInput)
+    if(myInput){
+    }
+  }
 }

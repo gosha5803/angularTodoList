@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Signal, WritableSignal, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -7,6 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MySelectComponent } from '../Interface/my-select/my-select.component';
 import { MatInputModule } from '@angular/material/input'
 import { MyInputComponent } from '../Interface/my-input/my-input.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
 
 export interface ITile {
   color: string;
@@ -26,7 +28,8 @@ export interface ITile {
     MatSelectModule,
     MySelectComponent,
     MatInputModule,
-    MyInputComponent
+    MyInputComponent,
+    MatIconModule
   ],
   templateUrl: './todo-item.component.html',
   styleUrl: './todo-item.component.scss'
@@ -36,6 +39,7 @@ export class TodoItemComponent implements OnInit {
   tiles: ITile[] = []
   statusOptions = ['По плану', 'Под угрозой', 'Отстаёт']
   isInputVisible: boolean = false
+  private executioneer: WritableSignal<string> = signal('')
   
   ngOnInit(): void {
     this.tiles = [
@@ -54,6 +58,11 @@ export class TodoItemComponent implements OnInit {
 
   swithcInputVisible() {
     this.isInputVisible = !this.isInputVisible
+  }
+
+  inputChangeHandler(event: any) {
+    console.log(event.target.value)
+    this.executioneer.set(event.target.value)
   }
 
 }

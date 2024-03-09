@@ -58,6 +58,12 @@
 
     </mat-grid-list> -->
 
+    <app-my-input
+    placeholder="sasa"
+    >
+      
+    </app-my-input>
+
     <mat-grid-list
     cols="8" rowHeight="40px"
     >
@@ -98,9 +104,21 @@
           [style.border-right]="tile.border"
           >
           @if (isInputVisible) {
-            <app-my-input
+            <!-- <app-my-input
             [placeholder]="todo.executioneer"
-            />
+            /> -->
+            <mat-form-field>
+              <input
+              (input)="inputChangeHandler($event)"
+              matInput
+              placeholder="Имя/email ответственного."
+              />
+            </mat-form-field>
+            <button
+            mat-mini-fab
+            >
+              <mat-icon>done</mat-icon>
+            </button>
           } @else {
             <div
             (click)="swithcInputVisible()"
