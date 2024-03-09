@@ -1,5 +1,23 @@
-<p>
-    <mat-table>
-        <ng-container></ng-container>
-    </mat-table>
-</p>
+<div
+    class="todo-list"
+>
+
+    <mat-grid-list
+    cols="8"
+    rowHeight="60px"
+    >
+        @for(tile of tiles; track tile) {
+        <mat-grid-tile
+          [colspan]="tile.cols"
+          [style.background]="tile.color"
+          [style.border-top]="tile.border"
+          [style.border-right]="tile.border"
+          >{{tile.text}}</mat-grid-tile>
+        }
+    </mat-grid-list>
+    @for (todo of todos; track todo.id) {
+        <app-todo-item
+        [todo]="todo"
+        />
+    }
+</div>
