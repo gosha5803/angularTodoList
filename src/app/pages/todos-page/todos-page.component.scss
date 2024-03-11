@@ -1,9 +1,11 @@
 .todo-list{
     width: 80%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    top: 0;
+    display: flex;
+    justify-content: center;
+    // position: absolute;
+    // right: 0;
+    // bottom: 0;
+    // top: 0;
 }
 
 mat-grid-tile{

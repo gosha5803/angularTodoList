@@ -1,0 +1,83 @@
+<form
+class="create-todo-form"
+(submit)="submitHandler($event)"
+>
+    <h1>
+        Новая задача
+    </h1>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Название задачи</mat-label>
+        <input 
+        matInput
+        [formControl]="titleFormControl"
+        [errorStateMatcher]="matcher"
+        (input)="titleChangeHandler($event)"
+        >
+        @if (titleFormControl.hasError('required')) {
+          <mat-error>Пожалуйста введите название задачи</mat-error>
+        }
+      </mat-form-field>
+
+    <!-- <mat-form-field>
+        <mat-label>Название задачи</mat-label>
+        <input
+        matInput
+        [errorStateMatcher]="matcher" 
+        
+        /> -->
+        <!-- @if(titleFormControl.hasError('required')){ -->
+            <!-- <mat-error> Введите название задачи! </mat-error> -->
+        <!-- } -->
+
+    <!-- </mat-form-field> -->
+
+    <!-- <mat-form-field>
+        <mat-label>Дедлайн</mat-label>
+        <input matInput type="date"/>
+    </mat-form-field> -->
+
+    <mat-form-field>
+        <mat-label>Срок выполнения</mat-label>
+        <mat-date-range-input 
+        
+        [rangePicker]="picker">
+          <input
+          matStartDate placeholder="Start date">
+          <input 
+          (dateChange)="deadLineChangesHandler($event)"
+          matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <app-my-select
+    [placeHolder]=" 'Приоритет' "
+    [options]="priorityOptions"
+    (valueChange)="priorityChangesHandler($event)"
+    />
+    
+    <app-my-select
+    [placeHolder]=" 'Статус' "
+    [options]="statusOptions"
+    (valueChange)="statusChangesHandler($event)"
+    />
+
+    <mat-form-field>
+        <mat-label>Исполнители</mat-label>
+        <input 
+        (input)="executorChangeHandler($event)"
+        matInput type="text"/>
+    </mat-form-field>
+
+    <button
+    mat-raised-button
+    type="submit"
+    color="accent"
+    >
+        Создать задачу
+    </button>
+
+</form>

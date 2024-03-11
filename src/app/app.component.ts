@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { TodosPageComponent } from './pages/todos-page/todos-page.component';
@@ -9,7 +9,7 @@ import { TodosPageComponent } from './pages/todos-page/todos-page.component';
   imports: [
     RouterOutlet,
     TodoItemComponent,
-    TodosPageComponent    
+    TodosPageComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

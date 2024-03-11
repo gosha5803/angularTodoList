@@ -4,6 +4,8 @@ import { ITile, TodoItemComponent } from '../../components/todo-item/todo-item.c
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { MyModalComponent } from '../../components/Interface/my-modal/my-modal.component';
+import { StorageService } from '../../services/storage.service';
 
 
 
@@ -40,13 +42,18 @@ const todos: ITodo[] = [
     TodoItemComponent,
     MatGridListModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MyModalComponent
   ],
 })
 export class TodosPageComponent implements OnInit {
   displayedColumns: string[] = ['title', 'name', 'weight', 'symbol'];
   todos = todos
   tiles: ITile[] = []
+
+  constructor(
+    private storage: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.tiles = [
@@ -56,6 +63,8 @@ export class TodosPageComponent implements OnInit {
       {border: '1px solid black', text: 'Приоритет', cols: 1, rows: 1, color: 'white'},
       {border: '1px solid black', text: 'Статус', cols: 1, rows: 1, color: 'white'}
     ]
+
+    console.log(this.storage.getTodos())
   }
 
   logger(e: any){
