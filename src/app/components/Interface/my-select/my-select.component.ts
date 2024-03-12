@@ -15,6 +15,7 @@ import { EventEmitter } from '@angular/core';
 export class MySelectComponent {
   @Input() options: string[] = []
   @Input() placeHolder: string = ''
+  @Input() initialValue: string = ''
   @Output() valueChange: EventEmitter<string> = new EventEmitter()
 
   constructor() {}

@@ -1,142 +1,30 @@
 <div
 >
-  <mat-card
-  class="todo-item"
-  
-  >
-    <!-- <mat-grid-list
-      cols="8"
-      rowHeight="70px"
-    > -->
-    <!-- <mat-card-header>
-      {{ title }}
-    </mat-card-header> -->
-    
-      <!-- <mat-grid-tile
-      [colspan]="3"
-      >
-      <mat-card-content>
-        {{ title }}
-      </mat-card-content>
-    </mat-grid-tile>
-    
-    
-      <mat-grid-tile
-      [colspan]="2"
-      >
-        <mat-card-content>
-          {{ executioneer }}
-        </mat-card-content>
-      </mat-grid-tile>
 
-
+<h1>hello</h1>
+<mat-grid-list
+cols="8" rowHeight="40px"
+>
+@for(tile of tiles; track tile; let i = $index) {
+  @if(i === 4) {
     <mat-grid-tile
-    [colspan]="1"
+    [colspan]="tile.cols"
     >
-      <mat-card-content>
-        {{ deadLine }}
-      </mat-card-content>
-    </mat-grid-tile>
-    
-    
-      <mat-grid-tile
-      [colspan]="1"
-      >
-      <mat-card-content>
-        {{ priority }}
-      </mat-card-content>
-    </mat-grid-tile>
+    <app-my-select
+    [options]="['По плану', 'Под угрозой', 'Отстаёт']"
+    [initialValue]="todo.status"
+    >
 
+    </app-my-select>
+    </mat-grid-tile>
+  } @else {
+
+    
     <mat-grid-tile
-      [colspan]="1"
-      >
-      <mat-card-content>
-        {{ status }}
-      </mat-card-content>
-    </mat-grid-tile>
-
-
-    </mat-grid-list> -->
-
-    <app-my-input
-    placeholder="sasa"
-    >
-      
-    </app-my-input>
-
-    <mat-grid-list
-    cols="8" rowHeight="40px"
-    >
-      @for(tile of tiles; track tile) {
-        @if(tile.text === todo.status){
-          <mat-grid-tile
-          class="my-select"
-          [colspan]="tile.cols"
-          [style.background]="tile.color"
-          [style.border-top]="tile.border"
-          [style.border-right]="tile.border"
-          >
-            <mat-select
-            [value]="todo.status"
-            (valueChange)="statusChangeHandler($event)"
-            >
-              <!-- <select
-              matNativeControl
-              (select)="logger"
-              > -->
-                @for (option of statusOptions; track option) {
-                  <mat-option [value]="option">{{ option }}</mat-option>
-                }
-              <!-- </select> -->
-            </mat-select>
-            <!-- <app-my-select
-            class="my-select"
-            [options]="['По плану', 'Под угрозой', 'Отстаёт']"
-            /> -->
-            <!-- <button mat-button color="primary">Кнопка</button> -->
-          </mat-grid-tile>
-        } @else if(tile.text === todo.executioneer) {
-          <mat-grid-tile
-          class="input-tile"
-          [colspan]="tile.cols"
-          [style.background]="tile.color"
-          [style.border-top]="tile.border"
-          [style.border-right]="tile.border"
-          >
-          @if (isInputVisible) {
-            <!-- <app-my-input
-            [placeholder]="todo.executioneer"
-            /> -->
-            <mat-form-field>
-              <input
-              (input)="inputChangeHandler($event)"
-              matInput
-              placeholder="Имя/email ответственного."
-              />
-            </mat-form-field>
-            <button
-            mat-mini-fab
-            >
-              <mat-icon>done</mat-icon>
-            </button>
-          } @else {
-            <div
-            (click)="swithcInputVisible()"
-            >
-              {{todo.executioneer}}
-            </div>
-          }
-          </mat-grid-tile>
-        }
-          @else {
-          <mat-grid-tile
-          [colspan]="tile.cols"
-          [style.background]="tile.color"
-          [style.border-top]="tile.border"
-          [style.border-right]="tile.border"
-          >{{tile.text}}</mat-grid-tile>
-        }
-      }
-    </mat-grid-list>
-  </mat-card>
+    [colspan]="tile.cols"
+    >{{tile.text}}</mat-grid-tile>
+    
+  }
+}
+</mat-grid-list>
 </div>

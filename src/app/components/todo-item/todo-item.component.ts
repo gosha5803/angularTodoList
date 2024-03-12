@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Signal, WritableSignal, signal } from '@angul
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list'
-import { IStatus, ITodo } from '../../pages/todos-page/todos-page.component';
+import { ITodo } from '../../services/todos.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MySelectComponent } from '../Interface/my-select/my-select.component';
 import { MatInputModule } from '@angular/material/input'
@@ -11,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 
 export interface ITile {
-  color: string;
   cols: number;
   rows: number;
   text: string;
@@ -43,11 +42,11 @@ export class TodoItemComponent implements OnInit {
   
   ngOnInit(): void {
     this.tiles = [
-      {border: '1px solid black', text: this.todo.title, cols: 3, rows: 1, color: '#585858'},
-      {border: '1px solid black', text: this.todo.executioneer, cols: 2, rows: 1, color: '#585858'},
-      {border: '1px solid black', text: this.todo.deadLine, cols: 1, rows: 1, color: '#585858'},
-      {border: '1px solid black', text: this.todo.priority, cols: 1, rows: 1, color: '#585858'},
-      {border: '1px solid black', text: this.todo.status, cols: 1, rows: 1, color: 'red'}
+      {border: '1px solid black', text: this.todo.title, cols: 3, rows: 1},
+      {border: '1px solid black', text: this.todo.executors, cols: 2, rows: 1},
+      {border: '1px solid black', text: this.todo.deadline, cols: 1, rows: 1},
+      {border: '1px solid black', text: this.todo.priority, cols: 1, rows: 1},
+      {border: '1px solid black', text: this.todo.status, cols: 1, rows: 1}
     ]
   }
 

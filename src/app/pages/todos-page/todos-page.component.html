@@ -7,6 +7,7 @@ class="todo-list"
 >
 
     <div
+    class="todo-grid"
     >
     
     
@@ -17,30 +18,24 @@ class="todo-list"
     @for(tile of tiles; track tile) {
         <mat-grid-tile
         [colspan]="tile.cols"
-        [style.background]="tile.color"
         [style.border-top]="tile.border"
-            [style.border-right]="tile.border"
+        [style.border-right]="tile.border"
+        [style.background-color]="'#555'"
             >{{tile.text}}</mat-grid-tile>
         }
     </mat-grid-list>
+
+
     @for (todo of todos; track todo.id) {
+       <mat-card
+       class="todo-item"
+       >
         <app-todo-item
         [todo]="todo"
         />
+       </mat-card>
     }
     
-    <mat-grid-list
-    [style.backgroundColor]="'#555'"
-    cols="8"
-    rowHeight="60px"
-    >
-    
-    <mat-grid-tile
-    [colspan]="3"  
-    >
-    Добавить задачу...
-</mat-grid-tile>
 
-</mat-grid-list>
 </div>
 </div>

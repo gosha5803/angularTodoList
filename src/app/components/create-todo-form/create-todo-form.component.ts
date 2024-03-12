@@ -42,7 +42,7 @@ export class CreateTodoFormComponent {
   todoTitle: WritableSignal<string> = signal('')
   executor: WritableSignal<string> = signal('')
   priority: string = ''
-  status: string = ''
+  status: string = '' 
   deadLine: string = ''
 
   titleFormControl = new FormControl('', [Validators.required])

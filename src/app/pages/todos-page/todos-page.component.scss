@@ -1,17 +1,22 @@
 .todo-list{
-    width: 80%;
     display: flex;
     justify-content: center;
+    margin-top: 100px;
     // position: absolute;
     // right: 0;
     // bottom: 0;
     // top: 0;
 }
 
-mat-grid-tile{
-    cursor: pointer;
+.todo-item{
+    margin: 5px 0;
+    transition: .2s;
 }
 
-mat-grid-tile:hover{
-    opacity: .9;
+.todo-item:hover {
+    padding: 2px;
+}
+
+.todo-grid{
+    width: 70%;
 }
