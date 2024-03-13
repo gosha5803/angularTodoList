@@ -1,3 +1,4 @@
+<!-- Форма для создания задачи -->
 <form
 class="create-todo-form"
 (submit)="submitHandler($event)"
@@ -6,6 +7,7 @@ class="create-todo-form"
         Новая задача
     </h1>
 
+    <!-- Поля формы по длкументации AngularMaterial -->
     <mat-form-field class="example-full-width">
         <mat-label>Название задачи</mat-label>
         <input 
@@ -19,28 +21,10 @@ class="create-todo-form"
         }
       </mat-form-field>
 
-    <!-- <mat-form-field>
-        <mat-label>Название задачи</mat-label>
-        <input
-        matInput
-        [errorStateMatcher]="matcher" 
-        
-        /> -->
-        <!-- @if(titleFormControl.hasError('required')){ -->
-            <!-- <mat-error> Введите название задачи! </mat-error> -->
-        <!-- } -->
-
-    <!-- </mat-form-field> -->
-
-    <!-- <mat-form-field>
-        <mat-label>Дедлайн</mat-label>
-        <input matInput type="date"/>
-    </mat-form-field> -->
-
+    <!-- DatePicker по документации -->
     <mat-form-field>
         <mat-label>Срок выполнения</mat-label>
         <mat-date-range-input 
-        
         [rangePicker]="picker">
           <input
           matStartDate placeholder="Start date">
@@ -53,6 +37,7 @@ class="create-todo-form"
         <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
 
+    <!-- Кастомный селект, который сам итерирует опции ([options]) и эммитирует смену значения наверх(valueChange), передавая его как $event. В один передаём возможные значения статуса, в другой - приоритета-->
     <app-my-select
     [placeHolder]=" 'Приоритет' "
     [options]="priorityOptions"
@@ -65,6 +50,7 @@ class="create-todo-form"
     (valueChange)="statusChangesHandler($event)"
     />
 
+    <!-- Текстовое поле ответственного за задачу -->
     <mat-form-field>
         <mat-label>Исполнители</mat-label>
         <input 
@@ -72,6 +58,7 @@ class="create-todo-form"
         matInput type="text"/>
     </mat-form-field>
 
+    <!-- Сабмит формы -->
     <button
     mat-raised-button
     type="submit"
