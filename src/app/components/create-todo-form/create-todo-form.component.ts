@@ -7,7 +7,7 @@ import { ErrorStateMatcher, provideNativeDateAdapter } from '@angular/material/c
 import { MatButtonModule } from '@angular/material/button';
 import { DateParser } from '../../utils/DateParser';
 import { FormControl, FormGroupDirective, NgForm, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { TodosService } from '../../services/todos.service';
+import { IDeadline, TodosService } from '../../services/todos.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -42,8 +42,8 @@ export class CreateTodoFormComponent {
   todoTitle: WritableSignal<string> = signal('')
   executor: WritableSignal<string> = signal('')
   priority: string = ''
-  status: string = '' 
-  deadLine: string = ''
+  status: string = ''
+  deadLine: IDeadline = {start: '', end: {string: '', number: 0}} as IDeadline
 
   titleFormControl = new FormControl('', [Validators.required])
   matcher = new MyErrorStateMatcher()
@@ -84,22 +84,29 @@ export class CreateTodoFormComponent {
     const startDate = this.dateParser.parseDate(start)
     const endDate = this.dateParser.parseDate(end)
     
-    this.deadLine = startDate + ' - ' + endDate
+    
+    this.deadLine = {
+      start: startDate.stringDate,
+      end: {
+        string: endDate.stringDate,
+        number: endDate.numberDate
+      }
+    }
   }
 
   submitHandler(event: SubmitEvent) {
     event.preventDefault()
     if(this.titleFormControl.hasError('required')) {
-      console.log('Ошибка')
       return
     }
 
-    this.todo.createTodo({
+      this.todo.createTodo({
       title: this.todoTitle(),
       deadline: this.deadLine,
       status: this.status,
       priority: this.priority,
-      executors: this.executor()
+      executors: this.executor(),
+      description: ''
     })
 
     this.dialogRef.close()

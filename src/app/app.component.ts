@@ -10,6 +10,7 @@ import { TodosPageComponent } from './pages/todos-page/todos-page.component';
     RouterOutlet,
     TodoItemComponent,
     TodosPageComponent,
+    RouterOutlet
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

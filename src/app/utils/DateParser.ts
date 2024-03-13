@@ -20,6 +20,6 @@ export class DateParser {
         //     day
         // }
 
-        return result
+        return {stringDate: result, numberDate}
     }
 }

@@ -13,7 +13,7 @@ import { EventEmitter } from '@angular/core';
   styleUrl: './my-select.component.scss'
 })
 export class MySelectComponent {
-  @Input() options: string[] = []
+  @Input() options: any[] = []
   @Input() placeHolder: string = ''
   @Input() initialValue: string = ''
   @Output() valueChange: EventEmitter<string> = new EventEmitter()

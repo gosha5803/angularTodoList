@@ -1,6 +1,5 @@
 <div>
-  
-<app-my-modal/>  
+  <app-my-modal/>  
 </div>
 <div
 class="todo-list"
@@ -12,18 +11,80 @@ class="todo-list"
     
     
     <mat-grid-list
-    cols="8"
+    cols="30"
     rowHeight="60px"
     >
-    @for(tile of tiles; track tile) {
-        <mat-grid-tile
-        [colspan]="tile.cols"
-        [style.border-top]="tile.border"
-        [style.border-right]="tile.border"
-        [style.background-color]="'#555'"
-            >{{tile.text}}</mat-grid-tile>
+    @for(tile of tiles; track tile; let i = $index) {
+        @if(i === 1 || i === 2 || i === 4) {
+            <mat-grid-tile
+            class="sorting-tile"
+            (click)="sort(tile.text)"
+            [colspan]="tile.cols"
+            [style.border]="tile.border"
+            [style.background-color]="'#555'"
+            >
+                <div
+                class="tile-block"
+                >
+                    <div
+                    class="title-block"
+                    >
+                        {{tile.text}}
+                    </div>
+                        @if(
+                            sortProp === tile.text
+                            ) {
+                                <mat-icon
+                                class="sort-icon"
+                                >
+                                {{ sortDirection === -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                                </mat-icon>
+                        }
+                    </div>
+            </mat-grid-tile>
+            
+        } @else {
+
+            <mat-grid-tile
+            [colspan]="tile.cols"
+            [style.border]="tile.border"
+            [style.background-color]="'#555'"
+        >
+            <div
+            class="tile-block"
+            >
+            <div
+            class="title-block"
+            >
+            {{tile.text}}
+        </div>
+        @if(
+                        sortProp === tile.text
+                        ) {
+                            <mat-icon
+                            class="sort-icon"
+                            >
+                            {{ sortDirection === -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                        </mat-icon>
+                    }
+                </div>
+            </mat-grid-tile>
         }
+        }
+        <mat-grid-tile
+        [colspan]="2"
+        [style.border]=" '1px solid black' "
+        [style.background-color]="'#555'"
+        ></mat-grid-tile>
     </mat-grid-list>
+
+    @if(todos && !todos.length) {
+        <h3
+        class="no-todos"
+        >
+            Задач пока нет...
+        </h3>
+    }
 
 
     @for (todo of todos; track todo.id) {
@@ -31,6 +92,7 @@ class="todo-list"
        class="todo-item"
        >
         <app-todo-item
+        (emitTodosUpdate)="updateTodos()"
         [todo]="todo"
         />
        </mat-card>

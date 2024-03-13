@@ -23,13 +23,39 @@ export class StorageService {
   }
 
   saveTodo(todo: ITodo) {
-    this.todos.push(todo)
+    let existingTodo = false
+    this.todos.forEach((todoItem, index) => {
+      if(todoItem.id === todo.id) {
+        this.todos[index] = todoItem
+        existingTodo = true
+        return
+      }
+    })
+
+    if(!existingTodo) {
+      this.todos.push(todo)
+    }
 
     localStorage.setItem('todos', JSON.stringify(this.todos))
   }
-
+  
   getTodos(): ITodo[] {
     return this.todos
   }
+
+  getTodo(id: number): ITodo | undefined {
+    return this.todos.find(todo => todo.id === id)
+  }
+  
+  deleteTodo(id: number) {
+    this.todos = this.todos.filter(todoItem => todoItem.id !== id)
+    localStorage.setItem('todos', JSON.stringify(this.todos))
+  }
+
+  getTodoById(id: number) {
+    return this.todos.find(todo => todo.id === id)
+  }
+
+  
 
 }

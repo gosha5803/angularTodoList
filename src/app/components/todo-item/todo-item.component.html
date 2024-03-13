@@ -1,30 +1,125 @@
 <div
 >
 
-<h1>hello</h1>
 <mat-grid-list
-cols="8" rowHeight="40px"
+[cols]="parent === 'todosPage' ? 30 : 1" 
+[rowHeight]="parent === 'todosPage' ? '40px' : '40px'"
 >
 @for(tile of tiles; track tile; let i = $index) {
-  @if(i === 4) {
+  @if((parent === 'todosPage' && i === 4) || (parent === 'todoPage' && i === 3)) {
     <mat-grid-tile
+    class="status-select"
+    [style.background-color]="selectColor"
     [colspan]="tile.cols"
     >
     <app-my-select
+    (valueChange)="statusChangeHandler($event)"
+    class="my-select"
     [options]="['По плану', 'Под угрозой', 'Отстаёт']"
-    [initialValue]="todo.status"
+    [initialValue]="todo.status.value"
     >
 
     </app-my-select>
     </mat-grid-tile>
-  } @else {
+  } @else if((parent === 'todosPage' && i === 3) || (parent === 'todoPage' && i === 2)) {
+    <mat-grid-tile
+    class="priority-select"
+    [style.background-color]="priorityColor"
+    [colspan]="tile.cols"
+    >
+    <app-my-select
+    (valueChange)="priorityChangeHandler($event)"
+    class="my-select"
+    [options]="['Высокий', 'Средний', 'Низкий']"
+    [initialValue]="todo.priority"
+    >
 
-    
+    </app-my-select>
+    </mat-grid-tile>
+  } @else if((parent === 'todosPage' && i === 1) || (parent === 'todoPage' && i === 0)) {
+    <mat-grid-tile
+    class="executor-tile"
+    [colspan]="tile.cols"
+    >
+    @if (!isInputVisible) {
+      <div
+      (click)="swithcInputVisible()"
+      class="todo-executor"
+      >
+        {{executor().length ? executor() : 'Исполнитель не назначен'}}
+      </div>
+    } @else {
+      <div
+      class="executor-form"
+      >
+      <mat-form-field
+      >
+      <input
+          class="executor-input"
+          (input)="executorChangeHandler($event)"
+          [value]="tile.text"
+          [placeholder]="tile.text"
+          matInput/>
+        </mat-form-field>
+        <button 
+        class="icon-btn"
+        mat-icon-button
+        color="accent"
+        (click)="changeExecutor()"
+        >
+          <mat-icon>
+            done
+          </mat-icon>
+        </button>
+      </div>
+    }
+    </mat-grid-tile>
+  } @else {
     <mat-grid-tile
     [colspan]="tile.cols"
-    >{{tile.text}}</mat-grid-tile>
-    
-  }
+    >{{tile.text}}
+    </mat-grid-tile>
+
 }
+
+}
+
+@if (parent === 'todosPage') {
+  <div
+  class="todo-btns"
+  >
+    <mat-grid-tile
+    [colspan]="1"
+    >
+    <button
+    (click)="deleteTodo()"
+    class="add-button"
+    color="warn"
+    mat-icon-button
+    >
+    <mat-icon
+    >
+    delete
+    </mat-icon>
+    </button>
+    </mat-grid-tile>
+    <mat-grid-tile
+    [colspan]="1"
+    >
+
+      <button
+      [routerLink]=" 'todos/' + todo.id "
+      color="accent"
+      mat-icon-button
+      >
+        <mat-icon
+        >
+        edit
+        </mat-icon>
+      </button>
+    </mat-grid-tile>
+  </div>
+}
+
 </mat-grid-list>
 </div>

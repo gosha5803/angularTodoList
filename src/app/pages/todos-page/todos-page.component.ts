@@ -8,12 +8,8 @@ import { MyModalComponent } from '../../components/Interface/my-modal/my-modal.c
 import { StorageService } from '../../services/storage.service';
 import { ITodo } from '../../services/todos.service';
 import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
-
-
-export interface IStatus {
-  value: 'По плану' | 'Под угрозой' | 'Отстаёт'
-}
 
 // const todos: ITodo[] = [
 //   {title: 'Заголовок1', description: '', deadLine: '11', priority: 'max', status: 'По плану', executioneer: 'Gosha', id: Date.now()},
@@ -36,31 +32,57 @@ export interface IStatus {
     MatButtonModule,
     MatIconModule,
     MyModalComponent,
-    MatCardModule
+    MatCardModule,
+    RouterLink
   ],
 })
 export class TodosPageComponent implements OnInit {
-  displayedColumns: string[] = ['title', 'name', 'weight', 'symbol'];
   todos: ITodo[] | undefined
   tiles: ITile[] = []
-
+  sortProp: string | 'Срок' | 'Статус' | 'Исполнитель'= ''
+  sortDirection: 1 | -1 = 1
+  
+  
   constructor(
     private storage: StorageService
-  ) {}
-
-  ngOnInit(): void {
-    this.tiles = [
-      {border: '1px solid black', text: 'Название задачи', cols: 3, rows: 1},
-      {border: '1px solid black', text: 'Исполнитель', cols: 2, rows: 1},
-      {border: '1px solid black', text: 'Срок', cols: 1, rows: 1},
-      {border: '1px solid black', text: 'Приоритет', cols: 1, rows: 1},
-      {border: '1px solid black', text: 'Статус', cols: 1, rows: 1}
-    ]
-
+    ) {}
+    
+    ngOnInit(): void {
+      this.tiles = [
+        {border: '1px solid black', text: 'Название задачи', cols: 8, rows: 1},
+        {border: '1px solid black', text: 'Исполнитель', cols: 5, rows: 1},
+        {border: '1px solid black', text: 'Срок', cols: 7, rows: 1},
+        {border: '1px solid black', text: 'Приоритет', cols: 4, rows: 1},
+        {border: '1px solid black', text: 'Статус', cols: 4, rows: 1}
+      ]
+      
     this.todos = this.storage.getTodos()
   }
-
-  logger(e: any){
-    console.log(e)
+  
+  sort(prop: string) {
+    this.sortProp = prop
+    this.sortDirection = this.sortDirection === -1 ? 1 : -1
+    
+    this.todos = this.todos?.sort((a: ITodo, b: ITodo) => {
+      switch(this.sortProp){
+        case 'Срок':
+          return this.compare(a.deadline.end.number, b.deadline.end.number)
+          case 'Статус':
+            return this.compare(a.status.weight, b.status.weight)
+            case 'Исполнитель':
+              return this.compare(a.executors, b.executors)
+              default:
+                return 1
+              }
+            })
+          }
+          
+  compare(a: any, b: any) {
+    return (a > b ? 1 : -1) * this.sortDirection
+  }
+  
+  updateTodos() {
+    this.todos = this.storage.getTodos()
+    console.log(this.todos)
   }
 }
