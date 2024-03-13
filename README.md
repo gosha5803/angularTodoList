@@ -1,27 +1,24 @@
-# AngularTodoList
+# Angular TodoList
+Для запуска приложения используйте ng serve.
+## Стек технологий
+- Angular 17
+- Angular Material
+- Typescrypt
+- SCSS
+### Структура папок
+- Components - компоненты.
+- Components/Interface - переиспользуемые UI компоненты.
+- Pages - страницы. (Со всеми задачами и детального просмотра задачи)
+- Services - сервисы, для работы с данными. (Попытка разделить логику отображения от бизнесс логики)
+- Utils - утилиты кастомные.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
+### Итог
+Удалось реализовать: 
+- Создание задачи (название, исполнитель, дедлайн, приоритет и статус)
+- Редактирования задачи на странице детального просмотра и на общей странице (Исполнители, статус, приоритет)
+- Отдельная страница со всеми задачами + сортировка по Исполнителям, статусу и дате дедлайна.
+- Сохранени в localStorage.
+Не удалось реализовать: 
+- Использование RxJs. Ознакомился с библиотекой но не понял целесообразности её использования и основных моментов где. можно было бы применить.
+- Фильтрацию задач. не успел реализовать.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

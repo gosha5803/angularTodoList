@@ -4,6 +4,5 @@ import { TodoPageComponent } from './pages/todo-page/todo-page.component';
 
 export const routes: Routes = [
     {path: '', component: TodosPageComponent},
-    {path: 'todos/:id', component: TodoPageComponent},
-    // {path: '**', component: TodosPageComponent}
+    {path: 'todos/:id', component: TodoPageComponent}
 ];

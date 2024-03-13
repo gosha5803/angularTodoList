@@ -10,16 +10,7 @@ import { ITodo } from '../../services/todos.service';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 
-
-// const todos: ITodo[] = [
-//   {title: 'Заголовок1', description: '', deadLine: '11', priority: 'max', status: 'По плану', executioneer: 'Gosha', id: Date.now()},
-//   {title: 'Заголовок2', description: '', deadLine: '11', priority: 'max', status: 'Под угрозой', executioneer: 'Gosha', id: Date.now()},
-//   {title: 'Заголовок3', description: '', deadLine: '11', priority: 'max', status: 'Отстаёт', executioneer: 'Gosha', id: Date.now()},
-// ];
-
-/**
- * @title Basic use of `<table mat-table>`
- */
+// Компонент страницы со всеми задачами.
 @Component({
   selector: 'app-todos-page',
   styleUrl: './todos-page.component.scss',
@@ -37,16 +28,21 @@ import { RouterLink } from '@angular/router';
   ],
 })
 export class TodosPageComponent implements OnInit {
+  // Массив задач дл отрисовки
   todos: ITodo[] | undefined
+  // Массив плиток с названиями полей таблицы/задачи
   tiles: ITile[] = []
+  // Свойство сортироки и направление сортировки
   sortProp: string | 'Срок' | 'Статус' | 'Исполнитель'= ''
   sortDirection: 1 | -1 = 1
   
   
   constructor(
+    // Исользуем сервис хранилища
     private storage: StorageService
     ) {}
     
+    // При инициализации присваиваем плиткам массив с объектами - конфиг сетки таблицы.
     ngOnInit(): void {
       this.tiles = [
         {border: '1px solid black', text: 'Название задачи', cols: 8, rows: 1},
@@ -56,9 +52,11 @@ export class TodosPageComponent implements OnInit {
         {border: '1px solid black', text: 'Статус', cols: 4, rows: 1}
       ]
       
+    // Присваиваем задачи запрашивая их методом getTodo из сервиса.
     this.todos = this.storage.getTodos()
   }
   
+  // Метод сортировки принимает строку свойства сортировки и присваивает её свойству sortProp и меняет текущее направление сортировки. Далее switch case перебирает каждое свойства и для каждого передаёт в функцию compare соответствующие значения ключей обхекта Задачи.
   sort(prop: string) {
     this.sortProp = prop
     this.sortDirection = this.sortDirection === -1 ? 1 : -1
@@ -76,13 +74,14 @@ export class TodosPageComponent implements OnInit {
               }
             })
           }
-          
+
+      // Функция принимает любые значения и сравнивает их, а затем умножает на направление сортировки.
   compare(a: any, b: any) {
     return (a > b ? 1 : -1) * this.sortDirection
   }
   
+  // Функция для обновления состояния задчач, вызывается, когда дочерние элементы удаляют задачу, и запрашивают обновление данных. emmit()
   updateTodos() {
     this.todos = this.storage.getTodos()
-    console.log(this.todos)
   }
 }

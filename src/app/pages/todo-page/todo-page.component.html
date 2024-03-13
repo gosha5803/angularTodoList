@@ -1,20 +1,22 @@
 <div
 class="todo-detail-content"
 >
+    <!-- задача отрисовывается на карточке -->
     <mat-card
     class="todo-card"
     >
         <mat-card-header>
             <mat-card-title>
                 {{ todo.title }}
+                <!-- Заголовок карточки = заголовку задачи -->
             </mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-            
             <div
             class="tiles"
             >
+            <!-- Сетка шириной в 1 колонку отрисовывает названия полей задачи -->
                 <mat-grid-list
                 class="card-table"
                 cols="1"
@@ -32,28 +34,8 @@ class="todo-detail-content"
                         </mat-grid-tile>
                     }
                 </mat-grid-list>
-                <!-- <mat-grid-list
-                class="card-table"
-                cols="2"
-                rowHeight="80px"
-                >
-                    @for (tile of tiles; track $index) {
-                        <mat-grid-tile
-                        colspan="1"
-                        >
-                            <div
-                            class="tile-key"
-                            >
-                                {{ tile.key }}
-                            </div>
-                        </mat-grid-tile>
-                        <mat-grid-tile
-                        colspan="1"
-                        >
-                        {{ tile.value }}
-                        </mat-grid-tile>
-                    }
-                </mat-grid-list>  -->
+                
+                <!-- Далее отрисовывается компонент TodoItem. В него передаётся родитель todoPage и задача todo -->
                 <app-todo-item
                 class="todo-item"
                 [todo]="todo"
@@ -61,6 +43,7 @@ class="todo-detail-content"
                 />
             </div>
             
+            <!-- Блок с textarea для добавления описания задачи -->
             <div
             class="todo-description"
             >
@@ -70,15 +53,17 @@ class="todo-detail-content"
                 <mat-form-field
                 class="todo-description-form">
                     <mat-label>Описание</mat-label>
+                    <!-- Значение инпута равно текущему описанию, если оно есть, на событи input навешен хендлер -->
                     <textarea
                     [value]="todo.description?.length ? todo.description : '' "
                     (input)="descriptionChangesHandler($event)"
                     style="width: 400px;"
-                    matInput placeholder="Ex. It makes me feel..."></textarea>
+                    matInput placeholder="описание задачи..."></textarea>
                 </mat-form-field>
             </div>
         </mat-card-content>
 
+        <!-- В футере отрисовываются две кнопки, Одна для редиректа на страницу со всеми инпутами, дургая для сохранения изменений описания задачи и последующего редиректа.  -->
         <mat-card-footer>
             <button
             mat-mini-fab
@@ -90,13 +75,14 @@ class="todo-detail-content"
                     done
                 </mat-icon>
             </button>
+
             <button
             [routerLink]=" '/' "
             mat-mini-fab
             color="warn"
             >
                 <mat-icon>
-                    close
+                    arrow_back
                 </mat-icon>
             </button>
         </mat-card-footer>

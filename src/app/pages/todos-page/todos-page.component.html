@@ -1,75 +1,64 @@
 <div>
+    <!-- Модально окно с кнопкой добаить задачу -->
   <app-my-modal/>  
 </div>
 <div
 class="todo-list"
 >
-
     <div
     class="todo-grid"
     >
-    
-    
+    <!-- Сетка AngularMaterial -->
     <mat-grid-list
-    cols="30"
-    rowHeight="60px"
-    >
-    @for(tile of tiles; track tile; let i = $index) {
-        @if(i === 1 || i === 2 || i === 4) {
-            <mat-grid-tile
-            class="sorting-tile"
-            (click)="sort(tile.text)"
-            [colspan]="tile.cols"
-            [style.border]="tile.border"
-            [style.background-color]="'#555'"
-            >
-                <div
-                class="tile-block"
+        cols="30"
+        rowHeight="60px"
+        >
+        <!-- Итерируемся по плиткам, индексам соответствуют свойства по которым можно сортировать задачи. По клику вызывается функция sort куда передаётся поле текст плитки-->
+        @for(tile of tiles; track tile; let i = $index) {
+            @if(i === 1 || i === 2 || i === 4) {
+                <mat-grid-tile
+                class="sorting-tile"
+                (click)="sort(tile.text)"
+                [colspan]="tile.cols"
+                [style.border]="tile.border"
+                [style.background-color]="'#555'"
                 >
                     <div
-                    class="title-block"
+                    class="tile-block"
+                    >
+                        <div
+                        class="title-block"
+                        >
+                            {{tile.text}}
+                        </div>
+                        <!-- Если свойство сортировки и текст плитки совпадают, значит сортируются по ней, поэтому добавляем стрелку вниз или вверх в зависимости от направления сортировки -->
+                            @if(
+                                sortProp === tile.text
+                                ) {
+                                    <mat-icon
+                                    class="sort-icon"
+                                    >
+                                    {{ sortDirection === -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                                    </mat-icon>
+                            }
+                        </div>
+                </mat-grid-tile>
+                
+            } @else {
+                <!-- Остальные плитки -->
+                <mat-grid-tile
+                [colspan]="tile.cols"
+                [style.border]="tile.border"
+                [style.background-color]="'#555'"
+                >
+                    <div
+                    class="tile-block"
                     >
                         {{tile.text}}
                     </div>
-                        @if(
-                            sortProp === tile.text
-                            ) {
-                                <mat-icon
-                                class="sort-icon"
-                                >
-                                {{ sortDirection === -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
-                                </mat-icon>
-                        }
-                    </div>
-            </mat-grid-tile>
-            
-        } @else {
-
-            <mat-grid-tile
-            [colspan]="tile.cols"
-            [style.border]="tile.border"
-            [style.background-color]="'#555'"
-        >
-            <div
-            class="tile-block"
-            >
-            <div
-            class="title-block"
-            >
-            {{tile.text}}
-        </div>
-        @if(
-                        sortProp === tile.text
-                        ) {
-                            <mat-icon
-                            class="sort-icon"
-                            >
-                            {{ sortDirection === -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
-                        </mat-icon>
-                    }
-                </div>
-            </mat-grid-tile>
+                </mat-grid-tile>
         }
+        <!-- Одна плитка над кнопками удаления и редактирования задачи todoItem -->
         }
         <mat-grid-tile
         [colspan]="2"
@@ -78,6 +67,7 @@ class="todo-list"
         ></mat-grid-tile>
     </mat-grid-list>
 
+    <!-- если задач нет выводится подсказка -->
     @if(todos && !todos.length) {
         <h3
         class="no-todos"
@@ -86,7 +76,7 @@ class="todo-list"
         </h3>
     }
 
-
+    <!-- Далее итерируемся по задачам и кажду передаём в компонент todoItem, где рожителем указываем todosPage. Также вешаем метод обновления задач на слушатель события emitTodosUpdate  -->
     @for (todo of todos; track todo.id) {
        <mat-card
        class="todo-item"
@@ -97,7 +87,5 @@ class="todo-list"
         />
        </mat-card>
     }
-    
-
-</div>
+    </div>
 </div>

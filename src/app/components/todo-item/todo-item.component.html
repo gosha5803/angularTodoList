@@ -1,26 +1,28 @@
-<div
->
+<div>
+  <!-- Сетка из AngularMaterial. в зависимости от родителя отрисовывается сетка с разным количеством колон, на странице детального просмотра сетка рендерится в одну колону.-->
+  <mat-grid-list
+  [cols]="parent === 'todosPage' ? 30 : 1" 
+  [rowHeight]="'40px'"
+  >
+  <!-- Итерируем плитки, каждая из которых отрисовывает одно из полей задачи, по индексу определяем поля со специфичной разметкой. (На странице детального просмотра индекс смещается на один) -->
+  @for(tile of tiles; track tile; let i = $index) {
+    <!-- Данный эелемент это селектор статуса, значит в плитку передаётся селектор, в который сообщаются опции, значение по умолчанию хендлер изменения статуса. -->
+    @if((parent === 'todosPage' && i === 4) || (parent === 'todoPage' && i === 3)) {
+      <mat-grid-tile
+      class="status-select"
+      [style.background-color]="statusColor"
+      [colspan]="tile.cols"
+      >
+      <app-my-select
+      (valueChange)="statusChangeHandler($event)"
+      class="my-select"
+      [options]="['По плану', 'Под угрозой', 'Отстаёт']"
+      [initialValue]="todo.status.value"
+      >
+      </app-my-select>
+      </mat-grid-tile>
 
-<mat-grid-list
-[cols]="parent === 'todosPage' ? 30 : 1" 
-[rowHeight]="parent === 'todosPage' ? '40px' : '40px'"
->
-@for(tile of tiles; track tile; let i = $index) {
-  @if((parent === 'todosPage' && i === 4) || (parent === 'todoPage' && i === 3)) {
-    <mat-grid-tile
-    class="status-select"
-    [style.background-color]="selectColor"
-    [colspan]="tile.cols"
-    >
-    <app-my-select
-    (valueChange)="statusChangeHandler($event)"
-    class="my-select"
-    [options]="['По плану', 'Под угрозой', 'Отстаёт']"
-    [initialValue]="todo.status.value"
-    >
-
-    </app-my-select>
-    </mat-grid-tile>
+      <!-- Для поля с приоритетам делаем тоже самое, только передаём соответствующие ему методы и свойства. -->
   } @else if((parent === 'todosPage' && i === 3) || (parent === 'todoPage' && i === 2)) {
     <mat-grid-tile
     class="priority-select"
@@ -33,9 +35,10 @@
     [options]="['Высокий', 'Средний', 'Низкий']"
     [initialValue]="todo.priority"
     >
-
     </app-my-select>
     </mat-grid-tile>
+
+    <!-- Для поля с исполнителем ортрисовываем либо блок с имполнителем либо текстовый инпут, через который имполнитель редактируется. Изначальное значение инпута равно значению сигнала, который при инициализации приравнивается к полю исполнителя задачи. Видимость инпута меняется при нажатии на блок где отображается строка исполнителя и при клике на кнопку, сохраняющую изменение исполнителя.   -->
   } @else if((parent === 'todosPage' && i === 1) || (parent === 'todoPage' && i === 0)) {
     <mat-grid-tile
     class="executor-tile"
@@ -52,9 +55,9 @@
       <div
       class="executor-form"
       >
-      <mat-form-field
-      >
-      <input
+        <mat-form-field
+        >
+          <input
           class="executor-input"
           (input)="executorChangeHandler($event)"
           [value]="tile.text"
@@ -74,16 +77,18 @@
       </div>
     }
     </mat-grid-tile>
+
+    <!-- отрисовка остальных плиток -->
   } @else {
     <mat-grid-tile
     [colspan]="tile.cols"
     >{{tile.text}}
     </mat-grid-tile>
 
+  }
 }
 
-}
-
+<!-- Если родительская страница со всеми задачами, то у каждой задачи отрисовываются кнопки редиректа на страницу детального просмотра и кнопка удаления задачи. -->
 @if (parent === 'todosPage') {
   <div
   class="todo-btns"
@@ -91,22 +96,22 @@
     <mat-grid-tile
     [colspan]="1"
     >
-    <button
-    (click)="deleteTodo()"
-    class="add-button"
-    color="warn"
-    mat-icon-button
-    >
-    <mat-icon
-    >
-    delete
-    </mat-icon>
-    </button>
+      <button
+      (click)="deleteTodo()"
+      class="add-button"
+      color="warn"
+      mat-icon-button
+      >
+        <mat-icon
+        >
+        delete
+        </mat-icon>
+      </button>
     </mat-grid-tile>
+ 
     <mat-grid-tile
     [colspan]="1"
     >
-
       <button
       [routerLink]=" 'todos/' + todo.id "
       color="accent"

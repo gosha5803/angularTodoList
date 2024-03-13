@@ -28,15 +28,18 @@ export interface ITodo extends Omit<ICreateTodo, 'status'>  {
   status: IStatus
 }
 
+// Сервис для работы с todos
 @Injectable({
   providedIn: 'root'
 })
 export class TodosService {
 
+  // В конструктор передаём сервис хранилища
   constructor(
     private storage: StorageService
-  ) { }
+  ) {}
 
+  // Функция создания задачи принимает объект необходимый для создания задачи, в зависимости от переданного статуса задаёт статусу значение поля вес, которое используется при сортировке по статусу. Далее дополненный обхект сохраняется через сервис хранилища.
   createTodo(todoData: ICreateTodo) {
     const todo: ITodo = {...todoData, status: {} as IStatus, id: Date.now()}
     switch(todoData.status) {
@@ -51,11 +54,10 @@ export class TodosService {
         break
       }
 
-    // const newTodo: ITodo = {...todoData, id: Date.now()}
-
     this.storage.saveTodo(todo)
   }
 
+  // Функция смены статуса меняет объект статуса по строковому значению. И созраняет задачу.
   changeStatus(status: string, todo: ITodo) {
     
     switch(status) {
@@ -73,6 +75,7 @@ export class TodosService {
     this.storage.saveTodo(todo)
   }
 
+  // Функция смены описания, исполнителя и приоритета, принимает строковое значение и задачу, перезаписывает значение в задаче и сохраняет её.
   changePriority(value: string, todo: ITodo) {
     todo.priority = value
     this.storage.saveTodo(todo)
