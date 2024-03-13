@@ -6,7 +6,6 @@ import { ITodo, TodosService } from '../../services/todos.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MySelectComponent } from '../Interface/my-select/my-select.component';
 import { MatInputModule } from '@angular/material/input'
-import { MyInputComponent } from '../Interface/my-input/my-input.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import { StorageService } from '../../services/storage.service';
@@ -29,7 +28,6 @@ export interface ITile {
     MatSelectModule,
     MySelectComponent,
     MatInputModule,
-    MyInputComponent,
     MatIconModule,
     MatFormFieldModule,
     RouterLink

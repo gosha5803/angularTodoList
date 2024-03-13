@@ -53,7 +53,9 @@ export class CreateTodoFormComponent {
   matcher = new MyErrorStateMatcher()
 
   constructor(
+    // Импорт референса модального окна, чтобы закрывать его из формы для создания задачи.
     public dialogRef: MatDialogRef<CreateTodoFormComponent>,
+    
     private dateParser: DateParser,
     private todo: TodosService
   ) {}
