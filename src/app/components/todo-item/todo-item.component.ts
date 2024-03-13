@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, Signal, SimpleChanges, WritableSignal, input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -11,6 +11,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { StorageService } from '../../services/storage.service';
 import { RouterLink } from '@angular/router';
 
+//Интерфейс плитки, для отрисоки её в элементе mat-grid-list
 export interface ITile {
   cols: number;
   rows: number;
@@ -18,6 +19,7 @@ export interface ITile {
   border: string
 }
 
+//Компонент задачи. Предназначен дл яотрисовки полей задачи на странице со всеми задачами и на странице с детальным просмоотром задачи.
 @Component({
   selector: 'app-todo-item',
   standalone: true,
@@ -36,7 +38,9 @@ export interface ITile {
   styleUrl: './todo-item.component.scss'
 })
 export class TodoItemComponent implements OnInit, OnChanges {
+  // Задача передаётся извне, на основе её полей отрисовывается mat-grid-list.
   @Input() todo: ITodo = {} as ITodo
+  // Ключ родительского компонента, пердаётся из родителя, так как на разных компонентах задачу необходимо отрисовывать по-разному.
   @Input() parent: 'todosPage' | 'todoPage' = 'todosPage'
   tiles: ITile[] = []
   statusOptions: string[] = ['По плану', 'Под угрозой', 'Отстаёт']
