@@ -1,0 +1,13 @@
+.filter-card{
+    padding: 10px;
+    position: absolute;
+    z-index: 100;
+    border: 1px solid white;
+
+}
+
+.card-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -6,6 +6,7 @@
         <mat-label>{{ placeHolder }}</mat-label>
         <!-- В селект передаётся начальное значение и фукнция которая принимает событие смены значения. -->
         <mat-select
+        [multiple]="multi"
         [(value)]="initialValue"
         (valueChange)="changeHandler($event)"
         >

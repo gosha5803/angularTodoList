@@ -1,0 +1,59 @@
+<!-- Компонент карточки из AngularMaterial по флагу видлимости задаётся значение стиля display none|block  -->
+<mat-card
+[style.width]="'300px'"
+class="filter-card"
+[style.display]="visibility ? 'block' : 'none'"
+>
+    <mat-card-title>
+        <h2>
+            Фильтр
+        </h2>
+    </mat-card-title>
+
+    <!-- Три кастомных селект компонента. Для даты исполнителя и статуса. -->
+    <!-- В селектор исполнителей опции передаются, когда получаются от родительского компонента, в останльные напрямую, флаг multi = true/ На изменение значения везде навешен соответствующий слушатель. -->
+    <app-my-select
+    [placeHolder]="'Исполнитель'"
+    [multi]="true"
+    [options]="executors"
+    (valueChange)="executorChangesHandler($event)"
+    ></app-my-select>
+
+    <app-my-select
+    [placeHolder]="'Срок выполнения'"
+    [multi]="true"
+    [options]="['Сегодня', 'Завтра']"
+    (valueChange)="dateFilterChangesHandler($event)"
+    ></app-my-select>
+    
+    <app-my-select
+    [placeHolder]="'Статус'"
+    [multi]="true"
+    [options]="['По плану', 'Под угрозой', 'Отстаёт']"
+    (valueChange)="statusFilterChangesHandler($event)"
+    ></app-my-select>
+    
+    <!-- В footer карточки две кнопки подтверждения фильтров, которая просто скрывает панель фильтров и кнопка очистки всех фильтров, которая инициирует демонтаж компонента и передаёт его наверх. -->
+    <mat-card-footer
+    class="card-footer"
+    >
+        <button
+        mat-mini-fab
+        color="accent"
+        (click)="closeCardHandler()"
+        >
+            <mat-icon>
+                <!-- close -->
+                done
+            </mat-icon>
+        </button>
+
+        <button
+        mat-stroked-button
+        color="warn"
+        (click)="clearFilters()"
+        >
+            Очистить фильтры
+        </button>
+    </mat-card-footer>
+</mat-card>

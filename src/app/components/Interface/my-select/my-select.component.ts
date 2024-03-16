@@ -19,6 +19,8 @@ export class MySelectComponent {
   // Плейсхолдер селекта и начальное значене, для отображения его выбранным.
   @Input() placeHolder: string = ''
   @Input() initialValue: string = ''
+  // Флаг мульти селктора
+  @Input() multi: boolean = false
   //Эмиттер события, чтобы передавать изменение значения наверх, в родительский компонент.
   @Output() valueChange: EventEmitter<string> = new EventEmitter()
 

@@ -2,9 +2,64 @@
     <!-- Модально окно с кнопкой добаить задачу -->
   <app-my-modal/>  
 </div>
+
 <div
-class="todo-list"
+class="todo-content"
 >
+
+    <!-- Блок кнопок на странице задач, в данный момент в нём всего одна кнопка - фильтр задач -->
+    <div
+    class="todo-buttons"
+    >
+        <!-- Панель отрисовывается только если флаг монтирования true, в себя принимает такие параметры как исполнители, дл яселектора исполнителей, visibility - флаг видимости панели. Также эммитирует три события меняет видимости себя, пердаёт объект изменений, который попадают в функцию фильтрации и инициирует демонтаж самой себя.  -->
+        @if (mountFilterPanel) {
+            <app-filter-component
+            [executors]="existingExecutors"
+            [visibility]="showFilterPanel"
+            (closeEmitter)="switchFilterVisibility()"
+            (changesEmitter)="filterHandler($event)"
+            (clearFiltersEmitter)="demountFilterPanel()"
+            />
+        }
+        <!-- По флагу активности фильтров отрисовывается одна или другая кнопка. Функционал один просто другие стили. При нажатии меняет видимость панели фильтров. -->
+        @if(filterIsActive) {
+            <button 
+            class="todo-btn"
+            (click)="switchFilterVisibility()"
+            mat-fab 
+            extended 
+            color="primary" 
+            >
+                <mat-icon>filter_list</mat-icon>
+                Фильтр
+            </button>
+        } @else {
+            <button 
+            (click)="switchFilterVisibility()"
+            mat-fab 
+            extended
+            color="basic" 
+            >
+                <mat-icon>filter_list</mat-icon>
+                Фильтр
+            </button>
+        }
+
+        <!-- <mat-chip-grid #chipGrid aria-label="Enter fruits">
+            @for (filter of filterProps; track filter) {
+              <mat-chip-row
+                (removed)="removeFilterProp(filter)"
+                [editable]="false"
+                [aria-description]="'press enter to edit ' + filter">
+                {{filter}}
+                <button matChipRemove [attr.aria-label]="'remove ' + filter">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+        </mat-chip-grid> -->
+    </div>
+
     <div
     class="todo-grid"
     >
